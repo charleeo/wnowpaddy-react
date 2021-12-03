@@ -1,0 +1,43 @@
+* {
+  overflow-x: hidden;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+  background: #ffffff;
+  padding: auto;
+  margin: auto;
+}
+
+.hero-header {
+  background: url("../background_images/snow1.jpg"), -webkit-gradient(linear, right top, left top, color-stop(40%, #1d1922), to(#0a021d));
+  background: url("../background_images/snow1.jpg"), linear-gradient(to left, #1d1922 40%, #0a021d);
+  height: 80vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.home-page-text {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+}
+
+.home-page-text p {
+  color: #eb2323;
+}
+/*# sourceMappingURL=App.css.map */

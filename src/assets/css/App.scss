@@ -1,0 +1,17 @@
+*{
+  overflow-x: hidden;
+  box-sizing: border-box;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body{
+
+  background: #ffffff;
+  padding: auto;
+  margin: auto;
+}
+@import './navbar';
+@import './homepage';
+@import './loader';
+@import './footer';
+@import './loading-bg'

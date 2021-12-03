@@ -1,0 +1,21 @@
+.hero-header{
+    // background: #fffafa;
+    background: url('../background_images/snow1.jpg'), linear-gradient(to left, #1d1922 40%,#0a021d);
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+  }
+.home-page-text{
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+//   justify-content: space-between;
+    // align-content: center;
+    // align-self: center;
+    // justify-self: center;
+
+    p{
+        color: #eb2323;
+    }
+}

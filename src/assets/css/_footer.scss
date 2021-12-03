@@ -1,0 +1,39 @@
+.foot{
+    min-height: 30vh;
+    // background: linear-gradient(to top, #ffffff 40%,#ebe9f0);
+    background: #ffffff;
+  }
+  .footer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding:  40px;
+    border-bottom: 7px solid #080303;
+    border-top: 9px solid #050303;
+    .links{
+      flex: 5;
+      color: #0e0c0c;
+    }
+    .address{
+      border-left: 2px dashed #ceaaaa;
+      flex: 7;
+      color: #111010;
+      padding-left: 10px;
+    }
+  }
+  footer{
+    color: #070707;
+    text-align: center;
+  }
+
+  .topball {
+    -webkit-animation: ball 1.5s ease-in-out;
+    animation: ball 1.5s ease-in-out;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    animation-direction: alternate;
+    -webkit-animation-delay: .3s;
+    animation-delay: .3s;
+    cursor: pointer;
+}
