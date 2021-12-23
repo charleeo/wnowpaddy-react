@@ -1,6 +1,5 @@
 import {useState} from 'react';
 import httpServices from '../../services/httpServices';
-import auth from '../../services/authService';
 import Swal from 'sweetalert2';
 import { useHistory } from 'react-router-dom';
 
@@ -32,7 +31,6 @@ export default function PostCategories(props){
     if(responseStatus === false){
         message = responses.data.response ===null? responses.data.message : responses.data.response[0].message
         setIsLoading(false)
-        console.log(responses)
         Swal.fire({
             title: 'Error!',
             text: message,
@@ -41,7 +39,6 @@ export default function PostCategories(props){
     }else if(responseStatus === true){
         message = responses.data.message
         setIsLoading(false)
-        auth.setJWT(responses.data.response.access_token)
         Swal.fire({
             title: 'Success!',
             text: message,

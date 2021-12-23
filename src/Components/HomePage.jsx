@@ -6,9 +6,10 @@ import undraw2 from '../assets/background_images/undraw2.png'
 import undraw3 from '../assets/background_images/undraw3.png'
 const  HomePage=()=>{
   useDocumentTitle('Your Snow Paddy: Home page')
+  
   return ( 
     <>
-    <main>
+    <main>    
         <section className="hero-header">
             <div className="home-page-text">
                 <h1>
@@ -19,7 +20,6 @@ const  HomePage=()=>{
                 </p>
             </div>
         </section>
-        <button className="learn-more">Learn more</button>
     </main>
    
     <section className="main-card-section">

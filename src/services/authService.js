@@ -1,8 +1,10 @@
 import JWTDecode  from 'jwt-decode';
 
 const tokenKey = 'token'
+const userKey = 'user'
 function logout() {
 localStorage.removeItem(tokenKey);
+localStorage.removeItem(userKey);
 }
 function getCurrentUser(){
     try {
@@ -20,10 +22,16 @@ function getCurrentUser(){
  const setJWT= (token)=>{
   localStorage.setItem(tokenKey,token);
  }
+ const setUser= (user)=>{
+  localStorage.setItem(userKey,user);
+ }
  const getJWT=()=>{
    return localStorage.getItem(tokenKey)
  }
- const auth = {getCurrentUser,logout,setJWT,getJWT}
+ const getUser=()=>{
+   return localStorage.getItem(userKey)
+ }
+ const auth = {getCurrentUser,logout,setJWT,getJWT,setUser,getUser}
  export default auth
 
  

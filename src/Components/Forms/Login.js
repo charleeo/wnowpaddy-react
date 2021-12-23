@@ -10,6 +10,7 @@ export default function Login(props){
     email: "",
     password: ""
   })
+  const [isChecked,setIsChecked] = useState(false)
    const [isLoading,setIsLoading] = useState(false);
   
    const onChange = e => {
@@ -19,12 +20,16 @@ export default function Login(props){
     })
   }
 
+  const handleCheckboxChange =()=>{
+    setIsChecked(!isChecked)
+  }
+
   const {email,password}=inputText
   const handleSubmit = async e => {
     e.preventDefault()
     const {state}= props.location;
 
-   const loginObject = {email,password}
+   const loginObject = {email,password,remember_me:isChecked}
    const url = `${httpServices.setURL()}/users/login`;
    try {
     setIsLoading(true)
@@ -43,11 +48,13 @@ export default function Login(props){
         message = responses.data.message
         setIsLoading(false)
         auth.setJWT(responses.data.response.access_token)
+        auth.setUser(JSON.stringify(responses.data.response.user))
         Swal.fire({
             title: 'Success!',
             text: message,
             icon: 'success',
-            confirmButtonText: 'OK'
+            confirmButtonText: 'OK',
+            timer:5000
           })
         setIsLoading(false)
         setInputText({email:'',password:''})
@@ -102,24 +109,24 @@ if(auth.getCurrentUser()){ return <Redirect to= '/'/>}
                   onChange={onChange}
                   className="form-control"/>
                 </div>
-              <div className="d-flex justify-content-center">
-                <button className="btn btn-bg " disabled={isLoading||(!password || !email)?true:false}> Login
+
+              <div className="login-btn-remember-me-wrapper">
+                <div>
+                <lable>Remember me?  </lable>
+                <input type="checkbox" name="remember_me" checked={isChecked} value={true}
+                onChange={handleCheckboxChange}
+                />
+                </div>
+                <button className="btn btn-primary" disabled={isLoading||(!password || !email)?true:false}> Login
                 </button>  
               </div>
               </form>
             </div>
             <hr/>
-            <div className="row justify-content-center">
-              <div className="col-md-5">
-                <div><small>Don't have an account</small>?  <Link to='/register'>Register</Link> 
-                </div>
-              </div>
-              <div className="col-md-7">
-                <div >Forgot Password?  <Link to='/forgot-password'>Recover Password</Link>
-                </div>
-              </div>
+            <div className="forgot-password-segment">
+              <div><Link to='/register'>Sign me up</Link></div>
+              <div ><Link to='/forgot-password'>Forgot Password</Link>?</div>
             </div>
-            <hr/>
           </div>
         </div>
       }

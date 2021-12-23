@@ -10,8 +10,27 @@ body{
   padding: auto;
   margin: auto;
 }
+.login-btn-remember-me-wrapper{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+.forgot-password-segment{
+  display: flex;
+  justify-content: space-between;
+}
+a{
+  text-decoration: none;
+  color: #050505ea;
+  &:hover{
+    color: #808080;
+  }
+}
+
 @import './navbar';
-@import './homepage';
 @import './loader';
+@import './loading-bg';
+@import './homepage';
+@import './pagination';
 @import './footer';
-@import './loading-bg'
+@import "./my_modal";

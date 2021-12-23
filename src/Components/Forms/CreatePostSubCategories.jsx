@@ -1,6 +1,5 @@
 import {useEffect, useState} from 'react';
 import httpServices from '../../services/httpServices';
-import auth from '../../services/authService';
 import Swal from 'sweetalert2';
 import { useHistory } from 'react-router-dom';
 
@@ -42,14 +41,12 @@ export default function CreatePostSubCategories(){
     }else if(responseStatus === true){
         message = responses.data.message
         setIsLoading(false)
-        auth.setJWT(responses.data.response.access_token)
         Swal.fire({
             title: 'Success!',
             text: message,
             icon: 'success',
             confirmButtonText: 'OK'
           })
-        setIsLoading(false)
         setInputText({name:''})
         history.push('/sub/categories')
     }

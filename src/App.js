@@ -10,12 +10,14 @@ import Categories from './Components/Categories';
 import Footer from './Components/common/Footer';
 import NavBar from './Components/common/Navbar.jsx';
 import ProtectedRoute from './Components/common/ProtectedRoute';
+import CreatePost from './Components/Forms/CreatePost';
 import PostCategories from './Components/Forms/CreatePostCategories';
 import CreatePostSubCategories from './Components/Forms/CreatePostSubCategories';
 import Login from './Components/Forms/Login';
 import Register from './Components/Forms/Register';
 import HomePage from './Components/HomePage.jsx';
 import Logout from './Components/Logout';
+import Posts from './Components/Posts';
 import Profile  from './Components/Profile';
 import SubCategories from './Components/SubCategories';
 import UserDetails from './Components/UserDetails';
@@ -41,6 +43,9 @@ function App() {
           <Route path = "/categories"><Categories/></Route>
           <Route path = "/sub/categories"><SubCategories/></Route>
           <Route path = "/sub-create"><CreatePostSubCategories/></Route>
+          <Route path="/posts">
+            <Posts/>
+          </Route>
         </Switch>
         <Footer/>
       </Router>

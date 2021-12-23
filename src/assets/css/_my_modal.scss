@@ -1,0 +1,33 @@
+
+.my-modal-wrapper{
+    background: rgba(211, 210, 211, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    padding: 2rem 0;
+    width: 100vw;
+    z-index: 1;
+}
+.modal-inner{
+  background:#ffffff;
+  z-index: 100;
+  padding: 1rem;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+}
+.large-layout{
+    width: 80%;
+}
+.midium-layout{
+    width: 50%;
+}
+.hide-modal{
+    display: none;
+}
+.show{
+    display: flex;
+}
