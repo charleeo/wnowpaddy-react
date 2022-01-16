@@ -1,59 +1,83 @@
-import { useState } from "react"
-import { Modal,Button } from "react-bootstrap"
+import { useEffect, useState, useRef } from "react"
+import { Modal, Button } from "react-bootstrap"
 import Pagination from "react-js-pagination"
+import { Link } from "react-router-dom"
 import Swal from "sweetalert2"
 import auth from "../../services/authService"
 import http from "../../services/httpServices"
 import CreatePost from "../Forms/CreatePost"
-import { postDetails } from "./PostDetails"
 
-export const PostsData = ({getData,posts,getSinglePost,post})=>{
-    const [show, setShow] = useState(false)
-    const [showEditModal, setShowEditModal] = useState(false)
-
-    const handleShow = () => setShow(true)
-    const handleClose = () => setShow(false)
-    const handleCloseEditPostModal = ()=> setShowEditModal(false)
-
-    const handleShowEditModal = () => { 
-        return setShowEditModal(true)
-    }
-  
-    const handleDelete= async (postID)=>{
-        let endPoint = `${http.setURL()}/posts/delete/${postID}`
-       const response = await http.post(endPoint,http.setJwtHeaders())
-       console.log(postID)
-        Swal.fire({
-            title: 'Are you sure you want to delete!',
-            text: "This action can not be reversed",
-            icon: 'warning',
-            confirmButtonText: 'OK'
-          },
-          console.log('deleted')
-          )
-        getData()
-    }
-  const handleCloseAllOPenedModal=()=>{
-      handleClose()
-      handleCloseEditPostModal()
-  }
+export const PostsData = ({getData,posts,showCreate,closeModal})=>{
   const {data,current_page, total,per_page} = posts.data.response
- 
-  /*** */
-  const getUserDetails =(postUserID)=>{
+  const [showEditModal, setShowEditModal] = useState(false)
+  let [post,setPost] = useState('')
+  
+  const handleCloseEditPostModal = ()=> {
+      setShowEditModal(false)
+    //   setPost('')//since create and edit uses one modal
+  }
+  
+  const handleShowEditModal = () => { 
+      return setShowEditModal(true)
+  }
+
+  const deletePost= async (postID)=>{
+      let endPoint = `${http.setURL()}/posts/${postID}`
+      return  await http.post(endPoint,{},http.setJwtHeaders())
+  }
+
+  const handleDelete= (postID)=>{
+      Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+             let response = await deletePost(postID)
+            Swal.fire({
+                  icon: 'success',
+                  title: response.data.message,
+                  showConfirmButton: false,
+                  timer: 1500
+              })
+              getData()
+          } 
+      })
+  }
+
+  const getSinglePost= async (id)=>{
+    let endPoint = `${http.setURL()}/posts/${id}`
+    let data = await http.get(endPoint)
+    if(data){
+        setPost(data)
+    }
+   }
+   
+  const checkIfUserCanModifyPost =(post)=>{
     const userDetails = JSON.parse(auth.getUser())
-    if(userDetails && postUserID == userDetails.id){
+    if(auth.getCurrentUser() && post.user_id === userDetails.id){
       return(
-          <>
-        <Button variant="warning" onClick={()=>{
-            handleShowEditModal()
-        }}>Edit</Button>
-        <Button variant="danger" onClick={()=>{
-            handleDelete(post)
-        }}>Delete</Button>
+        <>
+            <button className="btn btn-warning mr-4" onClick={ async()=>{
+                await getSinglePost(post.id)
+                handleShowEditModal()
+            }}>Edit</button>
+            <button className="btn btn-danger" onClick={()=>{
+                handleDelete(post.id)
+            }}>Delete</button>
         </>
       )
     }
+  }
+
+  const splitPostBody=(body)=>{
+    let postBody = body.slice(0,200)
+    if(body.length > postBody.length) return `${postBody}...` 
+    else return postBody
   }
 /*** */
   if(data && data.length > 0){
@@ -61,26 +85,22 @@ export const PostsData = ({getData,posts,getSinglePost,post})=>{
         <> 
         { data.map(post=>(
             <div className="row justify-content-center mb-3" key={post.id}>
-                <div className="col col-md-6">
-                <div className="card p-4">
-                    <div className="card-body">
-                        <ul className="list-group border-0">
-                            <li className="list-group-item d-flex">
-                                <p className="mr-4">
-                                    {post.title}
-                                </p> 
-                                <Button 
-                                className="btn btn-primary" 
-                                onClick={()=>{
-                                    getSinglePost(post.id)
-                                    handleShow()
-                                }
-                                }
-                                >
-                                View
-                                </Button>
-                            </li>
-                        </ul>
+                <div className="col-md-6">
+                <div className="card p-4 border-0">
+                    <div className="card-body shadow-lg">
+                        <h5>
+                            {post.title}
+                        </h5>
+                        <img src={ post.file_small_size_url} alt={post.title} className ="img img-thumbnail d-block "/>
+                        <hr />
+                        <p>{splitPostBody(post.body)}</p>
+                        <Link  
+                        className="btn btn-primary" 
+                            to = {`/${post.id}/post`}
+                        >
+                        Details
+                        </Link>
+                        {checkIfUserCanModifyPost(post)}
                     </div>
                 </div>
                 </div>
@@ -94,31 +114,22 @@ export const PostsData = ({getData,posts,getSinglePost,post})=>{
     totalItemsCount={total}
     pageRangeDisplayed={5}
     onChange={(pageNumber)=>getData(pageNumber)}
+    linkClass ="my-page-link"
     />
-    {/* Details Modal */}
-    <Modal show={show} onHide={handleClose} size='lg'>
-        <Modal.Body>
-            {post !==null && postDetails(post)}
-        </Modal.Body>
-        <Modal.Footer>
-            {post && getUserDetails(post.data.response.user_id)}
-          <Button variant="secondary" onClick={handleClose}>Ok</Button>
-        </Modal.Footer>
-      </Modal>
-    {/* Edit Modal here */}
-    <Modal show={showEditModal}  size='lg'>
+{/* Edit post */}
+    <Modal show={post?showEditModal:showCreate} onHide={post?handleCloseEditPostModal:closeModal}  size='lg'>
         <Modal.Body>
             <CreatePost
-            editPostData ={post?post:""}
-            getData = {getData}
-            // handleModalClose={handleCloseEditPostModal}
-            closeAllOpenedModal = {handleCloseAllOPenedModal}
+                editPostData ={post}
+                getData ={getData}
+                closeAllOpenedModal ={post?handleCloseEditPostModal:closeModal} 
             />
         </Modal.Body>
         <Modal.Footer>
-            <Button className="btn btn-primary" onClick={handleCloseEditPostModal}>Ok</Button>
+            <Button className="btn btn-primary" onClick={post?handleCloseEditPostModal:closeModal}>Ok</Button>
         </Modal.Footer>
       </Modal>
+
     </>
     )
     }else{

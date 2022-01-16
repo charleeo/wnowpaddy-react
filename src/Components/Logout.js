@@ -10,7 +10,9 @@ const Logout=()=> {
      Swal.fire({
         title: 'Success!',
         text: "Logged out",
-        icon: 'success'
+        icon: 'success',
+        showConfirmButton:false,
+        timer:2000
     }) 
     setTimeout(function(){
         history.push('/')

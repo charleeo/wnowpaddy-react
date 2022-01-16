@@ -1,14 +1,13 @@
 import {useEffect, useState} from 'react';
 import httpServices from '../../services/httpServices';
 import Swal from 'sweetalert2';
-// import { useHistory } from 'react-router-dom';
 import useDocumentTitle from '../../CustomHooks/useDocumentTitle';
 import { CreatePostHTML } from './html/createPost';
 
 export default function CreatePost({getData,editPostData,closeAllOpenedModal}){
-  
+  // console.log(editPostData)
   const [isLoading,setIsLoading] = useState(false);
-  
+  const [file, setFile] = useState('')
   let [subCategories, setSubCategories] = useState(null)
   
   let {title:editTitle,body:editBody,sub_category_id:editSubcategoryID,id}= editPostData?editPostData.data.response:""
@@ -35,25 +34,36 @@ export default function CreatePost({getData,editPostData,closeAllOpenedModal}){
       [e.target.name]: e.target.value,
     })
   }
-
+  
+  const handleFileUpload =(e)=>{
+    setFile(e.target.files[0])
+  }
+  
+  
   const {title,body,sub_category_id,post_id}= inputText//destructure the object data
-
+  
   const handleSubmit = async e => {
+    const formData = new FormData()
+    formData.append('file',file)
+    formData.append('sub_category_id',sub_category_id)
+    formData.append('title',title)
+    formData.append('body',body)
+    formData.append('post_id',post_id)
     e.preventDefault()
-   const postObject = {sub_category_id,body,title,post_id}
+  //  const postObject = {sub_category_id,body,title,post_id,file}
+   
    let url = `${httpServices.setURL()}/posts/`;
    if(editPostData){
     url = `${httpServices.setURL()}/posts/update`;
    }
    try {
     setIsLoading(true)
-    const responses = await httpServices.post(url, postObject,httpServices.setJwtHeaders());
+    const responses = await httpServices.post(url, formData,httpServices.setJwtHeaders());
     let responseStatus = responses.data.status
     let message = ''
     if(responseStatus === false){
         message = responses.data.response ===null? responses.data.message : responses.data.response[0].message
         setIsLoading(false)
-        console.log(responses)
         Swal.fire({
             title: 'Error!',
             text: message,
@@ -63,31 +73,31 @@ export default function CreatePost({getData,editPostData,closeAllOpenedModal}){
         message = responses.data.message
         setIsLoading(false)
         Swal.fire({
-            title: 'Success!',
-            text: message,
-            icon: 'success',
-            confirmButtonText: 'OK'
+          icon: 'success',
+          title: message,
+          showConfirmButton: false,
+          timer: 1500
           })
         getData()//this is to refresh the data when a new record is saved
-        // handleModalClose()
         closeAllOpenedModal()
     }
    } catch (ex) {
-     console.log(ex)
-    if(ex.response !== undefined || ex.statusCode < 500  ){
-        Swal.fire({
-            title: 'Error!',
-            text: ex.response.data.error,
-            icon: 'error'
-        })
+   console.log(ex)
+   if(ex.response !== undefined || ex.statusCode < 500  ){
+     Swal.fire({
+       title: 'Error!',
+       text: ex.response.data.error,
+       icon: 'error'
+      })
     }
     else { 
+      
       console.log(ex)
-        Swal.fire({
-            title: 'Error!',
-            text: "There was an unexpected error. Please try again",
-            icon: 'error'
-        })
+      Swal.fire({
+        title: 'Error!',
+        text: "There was an unexpected error. Please try again",
+        icon: 'error'
+      })
     }
     setIsLoading(false)
   }
@@ -99,6 +109,8 @@ useEffect(()=>{
         getData()
 },[endPoint])
 
+
+
  return  (
     <CreatePostHTML
      isLoading={isLoading}
@@ -108,10 +120,11 @@ useEffect(()=>{
      onChange = {onChange}
      body = {body}
      sub_category_id = {sub_category_id}
-     editPostData = {editPostData}
+     editPostData = {editPostData?editPostData:""}
      id ={id}
      submitText={submitText}
      subCategories ={subCategories}
+     handleFileUpload={handleFileUpload}
     />
     )
 }

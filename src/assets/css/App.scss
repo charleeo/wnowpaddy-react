@@ -7,8 +7,6 @@
 body{
 
   background: #ffffff;
-  padding: auto;
-  margin: auto;
 }
 .login-btn-remember-me-wrapper{
   display: flex;
@@ -25,6 +23,10 @@ a{
   &:hover{
     color: #808080;
   }
+}
+.my-page-link{
+  color: red;
+  background-color: purple;
 }
 
 @import './navbar';

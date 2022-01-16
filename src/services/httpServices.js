@@ -22,9 +22,12 @@ function setJwtHeaders() {
        Authorization: `Bearer ${token}` }
     };
 }
-export function setURL(){
+function setURL(){
   return 'http://127.0.0.1:8000/api'
   //   return 'https://d-save.herokuapp.com'
+}
+function setImagesURL(){
+  return 'http://127.0.0.1:8000/'
 }
 const instance = axios.create({
   baseURL: 'http://127.0.0.1:8000/api',
@@ -40,6 +43,7 @@ const http= {
   delete: axios.delete,
   setJwtHeaders,
   setURL,
-  instance
+  instance,
+  setImagesURL
 };
 export default http;

@@ -1,6 +1,7 @@
-export const CreatePostHTML=({
-    isLoading,handleSubmit,title,body,sub_category_id, text,onChange,subCategories,editPostData,id,submitText
-})=>{
+export const CreatePostHTML=(props)=>{
+  const {
+    isLoading,handleSubmit,title,body,sub_category_id, text,onChange,subCategories,editPostData,id,submitText,handleFileUpload
+} = props
     return(
     <div className={isLoading?'loader-wrapper':"row justify-content-center"}>
      {isLoading?<span className="loader"></span>:
@@ -31,7 +32,10 @@ export const CreatePostHTML=({
                     onChange={onChange}
                     className="form-control" />
                 </div>
-
+                
+                <div className='form-group'>
+                <input type="file" name="file"  onChange={handleFileUpload} />
+                </div>
                 <div className='form-group'>
                   <label htmlFor='name'>Sub Category</label>
                   <select  

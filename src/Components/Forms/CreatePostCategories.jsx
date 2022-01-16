@@ -40,10 +40,11 @@ export default function PostCategories(props){
         message = responses.data.message
         setIsLoading(false)
         Swal.fire({
-            title: 'Success!',
             text: message,
+             title:"",
             icon: 'success',
-            confirmButtonText: 'OK'
+            confirmButtonText: 'OK',
+            width:100+"%"
           })
         setIsLoading(false)
         setInputText({name:''})

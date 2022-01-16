@@ -50,11 +50,11 @@ export default function Login(props){
         auth.setJWT(responses.data.response.access_token)
         auth.setUser(JSON.stringify(responses.data.response.user))
         Swal.fire({
-            title: 'Success!',
             text: message,
             icon: 'success',
-            confirmButtonText: 'OK',
-            timer:5000
+            showConfirmButton:false,
+            timer:2000,
+            title:"Success"
           })
         setIsLoading(false)
         setInputText({email:'',password:''})
