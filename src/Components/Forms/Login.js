@@ -4,6 +4,22 @@ import { Link, Redirect } from 'react-router-dom';
 import auth from '../../services/authService';
 import Swal from 'sweetalert2';
 
+import React from 'react';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+// import Link  from '@material-ui/core/Link';
+import Paper from '@material-ui/core/Paper';
+// import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import useStyles from '../styles/useLoginCSS';
+
+
 export default function Login(props){
 
   const [inputText, setInputText] = useState({
@@ -21,11 +37,13 @@ export default function Login(props){
   }
 
   const handleCheckboxChange =()=>{
+    console.log(isChecked)
     setIsChecked(!isChecked)
   }
 
   const {email,password}=inputText
   const handleSubmit = async e => {
+
     e.preventDefault()
     const {state}= props.location;
 
@@ -80,56 +98,80 @@ export default function Login(props){
     setIsLoading(false)
   }
 }
-if(auth.getCurrentUser()){ return <Redirect to= '/'/>}
- return  (
-    <div className={isLoading?'loader-wrapper':"row justify-content-center p-5 login"}>
-     {isLoading?<span className="loader"></span>:
-        <div className='col-md-6 col-sm-12'>
-          <div className="card border-0 shadow p-3">
-            <div className='card-header '>
-              <h1 className="text-center">Login To Account</h1>
-            </div>
-            <div className='card-body shadow-lg'>             
-              <form onSubmit={handleSubmit}>
-                <div className='form-group'>
-                  <label htmlFor='email'>Email</label>
-                  <input type='email' 
-                   placeholder="enter your account's email"
-                    value={email}
-                    name="email" 
-                    onChange={onChange}
-                    className="form-control" />
-                </div>
-                <div className='form-group'>
-                  <label htmlFor='password'>Password</label>
-                  <input type='password'
-                  placeholder="enter your password"
-                  value={password}
-                  name="password"
-                  onChange={onChange}
-                  className="form-control"/>
-                </div>
 
-              <div className="login-btn-remember-me-wrapper">
-                <div>
-                <lable>Remember me?  </lable>
-                <input type="checkbox" name="remember_me" checked={isChecked} value={true}
-                onChange={handleCheckboxChange}
-                />
-                </div>
-                <button className="btn btn-primary" disabled={isLoading||(!password || !email)?true:false}> Login
-                </button>  
-              </div>
-              </form>
-            </div>
-            <hr/>
-            <div className="forgot-password-segment">
-              <div><Link to='/register'>Sign me up</Link></div>
-              <div ><Link to='/forgot-password'>Forgot Password</Link>?</div>
-            </div>
-          </div>
+const classes = useStyles();
+if(auth.getCurrentUser()){ return <Redirect to= '/'/>}
+
+  return (
+    <Grid container component="main" className={classes.root}>
+      <CssBaseline />
+      
+      <Grid item xs={false} sm={4} md={6} className={classes.image} />
+      <Grid item xs={12} sm={8} md={6} component={Paper} elevation={12} square>
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <form className={classes.form} noValidate onSubmit={handleSubmit}> 
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={email}
+              onChange={onChange}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              value={password}
+              onChange={onChange}
+              id="password"
+              autoComplete="current-password"
+            />
+            <FormControlLabel
+              control={<Checkbox  color="primary" name="remember_me" checked={isChecked} value={true} onChange={handleCheckboxChange} />}
+              label="Remember me"
+            />
+            {isLoading ?<div className="loader"></div>:
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              disabled={isLoading||(!password || !email)?true:false}
+              >
+              Sign In
+            </Button>}
+            <Grid container>
+              <Grid item xs>
+                <Link href="/forgot-password" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link to ="/register" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+          </form>
         </div>
-      }
-      </div>
-    )
+      </Grid>
+    </Grid>
+  );
 }

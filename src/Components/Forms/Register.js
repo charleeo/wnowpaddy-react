@@ -4,6 +4,19 @@ import httpServices from '../../services/httpServices'
 import { Link, Redirect } from 'react-router-dom';
 import auth from '../../services/authService';
 import Swal from 'sweetalert2';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+// import Link  from '@material-ui/core/Link';
+import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import useStyles from '../styles/useLoginCSS';
 
 const Register = (props)=>{
   const data = {
@@ -72,61 +85,107 @@ const Register = (props)=>{
     setIsLoading(false)
     }
   }
-  if(auth.getCurrentUser()) return <Redirect to= '/'/>
-  return(
-    <div className={isLoading?"loader-wrapper":"row justify-content-center register"}>
-     {isLoading?<div className={"loader"}></div>:
-      <div className="col-md-6 col-sm-12  shadow bg-white py-2">
-        <div className="card  ">
-          <div className="card-header">
-            <h4 className='text-center'>Register To Get Started</h4> 
-          </div>
-          <div className="card-body p-4">
-          </div>
-          <form onSubmit={handleSubmit} className='shadow-lg p-3'>
-            <Input
-              name ='email'
-              type="email"
+
+
+  const classes = useStyles();
+if(auth.getCurrentUser()){ return <Redirect to= '/'/>}
+
+  return (
+    <Grid container component="main" className={classes.root}>
+      <CssBaseline />
+      
+      <Grid item xs={false} sm={4} md={6} className={classes.image} />
+      <Grid item xs={12} sm={8} md={6} component={Paper} elevation={12} square>
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <form className={classes.form} noValidate onSubmit={handleSubmit}> 
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
               label="Email Address"
-              handleChange={handleChange}
+              name="email"
+              autoComplete="email"
+              autoFocus
+              onChange={handleChange}
               value={values.email}
             />
-            <Input
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="name"
+              autoComplete="name"
+              value={values.name}
+              onChange={handleChange}
               name ='name'
               label="User Name"
-              handleChange={handleChange}
               value={values.name}
               placeholder='enter your user name here'
             />
-            <Input
-              name ='password'
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
               label="Password"
               type="password"
-              handleChange={handleChange}
-              value={values.password}
-              placeholder='enter your password'
+              value={password}
+              onChange={handleChange}
+              id="password"
+              autoComplete="current-password"
             />
-            <Input
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
               name ='password_confirmation'
               label="Password Confirmation"
               type="password"
-              handleChange={handleChange}
+              onChange ={handleChange}
               value={values.password_confirmation}
               placeholder='Confirm Passord'
+              id="password"
+              autoComplete="current-password"
             />
-            <div className="d-flex justify-content-center">
-              <button className="btn btn-bg" 
-                disabled={isLoading || !email || !name || !password?true:false}>Register</button>  
-            </div>
+      
+            {isLoading ?<div className="loader"></div>:
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              disabled={isLoading||(!password || !email)?true:false}
+              >
+              Sign Up
+            </Button>}
+            <Grid container>
+              <Grid item xs>
+                <Link href="/forgot-password" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link to ="/login" variant="body2">
+                  {"have an account? Sign In"}
+                </Link>
+              </Grid>
+            </Grid>
           </form>
-            <hr/>
-            <div className="">
-              <p className='text-center'>Have An Account? &nbsp;<Link to='/login'>Login</Link> </p>
-            </div>
         </div>
-      </div>
-    }
-    </div>
-  )
+      </Grid>
+    </Grid>
+  );
 }
 export default Register

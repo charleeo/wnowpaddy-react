@@ -12,9 +12,9 @@ const  HomePage=()=>{
     <main>    
         <section className="hero-header">
             <div className="home-page-text">
-                <h1>
+                {/* <h1>
                 snow paddy
-                </h1>
+                </h1> */}
                 <p className='main-text'>
                 you don't have to weather the stormy and the snowing business weather all alone. count on us to weather it for you
                 </p>

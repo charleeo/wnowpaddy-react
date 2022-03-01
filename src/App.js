@@ -22,13 +22,16 @@ import Profile  from './Components/Profile';
 import SubCategories from './Components/SubCategories';
 import UserDetails from './Components/UserDetails';
 import User from './Components/Users';
-// import auth from './services/authService';
-
+import Header from './Components/common/Header'
+import menus from './Components/common/menus'
 function App() {
+
+
   return (
     <div className="App">
       <Router>
-      <NavBar/>
+      {/* <NavBar/> */}
+      <Header title='Snow Paddy' />
         <Switch>
           <Route exact path="/">
             <HomePage/>

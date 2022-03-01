@@ -2,15 +2,16 @@
     border: 2px solid #f3f3f3;
     border-radius: 50%;
     border-top: 2px solid #1d1922;
-    border-bottom: 2px solid #1d1922;
-    width: 80px;
-    height: 80px;
+    border-bottom: 2px solid #1a1919;
+    width: 45px;
+    height: 45px;
     -webkit-animation: spin 1s linear infinite;
     animation: spin 1s linear infinite;
     background: inherit;
-    display: inline-block;
+    display: block;
     text-align: center;
     padding: 6px 3px;
+    margin: auto;
   }
   
   @-webkit-keyframes spin {
