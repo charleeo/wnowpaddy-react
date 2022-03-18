@@ -31,10 +31,11 @@ const Posts = ()=>{
     return (
         <>
         {user &&
-        <Button variant="primary" onClick={handleShow}>
+        <Button variant="button" onClick={handleShow}
+         id  ="create_post_button"
+        >
           Create Post
         </Button>
-
         }
         <section className={isLoading?'loader-wrapper':"categories"}>
             <span className={isLoading?"loader":""}></span>
@@ -48,7 +49,6 @@ const Posts = ()=>{
             />
         }
         </section>
-      
     </>
     )
 }

@@ -24,6 +24,7 @@ import UserDetails from './Components/UserDetails';
 import User from './Components/Users';
 import Header from './Components/common/Header'
 import menus from './Components/common/menus'
+import HelmetMetaData from './Components/Data/HelmetMetaData';
 function App() {
 
 
@@ -31,7 +32,13 @@ function App() {
     <div className="App">
       <Router>
       {/* <NavBar/> */}
-      <Header title='Snow Paddy' />
+      <HelmetMetaData
+        title ="This is the title"
+        quote = "This is the quote"
+        description = "This is the description"
+        url = "url"
+      ></HelmetMetaData>
+        <Header title='Snow Paddy' />
         <Switch>
           <Route exact path="/">
             <HomePage/>

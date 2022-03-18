@@ -1,0 +1,62 @@
+ #create_post_button{
+     display: block !important;
+     text-align: center;
+      margin: 0.5rem auto;
+ }
+
+      .show-more-div{
+          visibility: hidden;
+          transition: 0.5s ease-in-out;
+          height: 0px;
+        }
+        .share_item_div{
+            visibility: hidden;
+            transition:0.5s ease-in-out;
+            height: 0px;
+      }
+
+      .more_item{
+          display: flex;
+          justify-content: center;
+          flex-direction: row;
+          background: inherit;
+          margin: auto 12px;
+          transition: 0.5s ease-in-out;
+          visibility: visible;
+          background: #d3d3d3;
+        }
+        .share_items{
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            background: inherit;
+            margin: auto 12px;
+            transition: 0.5s ease-in-out;
+            visibility: visible;
+            background: #d3d3d3;
+            padding: 0.2rem;
+          button{
+              margin-left: 12px;
+          }
+      }
+      .post-images{
+          height: 200px;
+          border-radius: 10px;
+      }
+      .social-icons{
+          display: flex;
+          justify-content: center;
+          background: inherit;
+      }
+      .inner-card{
+          height: 20rem;
+      }
+
+      .social_icons_shares{
+          display: flex;
+          justify-content: center;
+          .react-share__ShareButton{
+              margin:auto 5px !important;
+              cursor: pointer;
+          }
+      }

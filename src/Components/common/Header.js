@@ -1,55 +1,32 @@
 import React,{useState,useEffect} from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import Typography from '@material-ui/core/Typography';
 // import Link from '@material-ui/core/Link';
+import HorizontalSplitIcon from '@material-ui/icons/HorizontalSplit';
 import { Link} from 'react-router-dom';
 import menus from './menus';
 import auth from '../../services/authService';
-
-const useStyles = makeStyles((theme) => ({
-
-  toolbar: {
-    borderBottom: `3px solid ${theme.palette.divider}`,
-    display: 'flex',
-    justifyContent : "space-between",
-    overflowY :"hidden"
-  },
-  toolbarTitle: {
-    fontSize :"2rem",
-    textTransform : "uppercase"
-  },
-  toolbarSecondary: {
-    justifyContent: 'space-between',
-    overflowX: 'auto',
-  },
-  toolbarLink: {
-    padding: theme.spacing(1),
-    flexShrink: 0,
-  },
-toobarsearch:{
-  transform :"scale(2)"
-},
-
-  '@media (max-width: 480px)' : {
-    toolbar:{
-      
-    },
-
-    toolbarTitle: {
-      fontSize :"1.5rem",
-
-    },
-  },
-  
-}));
-
+import { TextField } from '@material-ui/core';
+import {useStyles} from './useStyle';
 export default function Header() {
-  const classes = useStyles();
+  const [showSearchTextField,setShowSearchTextField] = useState(false)
+  const handleSearchTextField=()=>{
+    if(!showSearchTextField){
+        setShowSearchTextField(true)
+    }else setShowSearchTextField(false)
+  }
+  const [showMenuItems,setShowMenuItems] = useState(false)
+  const handleShowMenuItems=()=>{
+    if(!showMenuItems){
+        setShowMenuItems(true)
+    }else setShowMenuItems(false)
+  }
+  const classes= useStyles();
   const sections = menus.menusItems();
   const [user,setUser] = useState(null);  
     useEffect(()=>{
@@ -63,24 +40,38 @@ export default function Header() {
     },[])
   return (
     <React.Fragment>
-      <Toolbar className={classes.toolbar}>
+      <Toolbar className={classes().toolbar} id ="header">
         <Typography
-          component="h1"
+          component="div"
           variant="h5"
           color="inherit"
           align="center"
           noWrap
-          className={classes.toolbarTitle}
+          className={classes().toolbarTitle}
         >
-          Snow Paddy
+          <Link to ='/'>Snow Paddy</Link>
         </Typography>
-          <Toolbar className={classes.toobarsearch}>
-            <IconButton>
-              <SearchIcon />
+          <Toolbar searchToolBar id="toolbars">
+            <TextField 
+              className= {classes().searchField}
+              style ={{
+                display: showSearchTextField? "flex":"none",
+                transition: "all 8s linear"
+              }}
+            />
+            <IconButton onClick={handleSearchTextField}>
+              <SearchIcon fontSize='large' />
             </IconButton>
+              <HorizontalSplitIcon
+                id ="bars"
+                onClick ={handleShowMenuItems}
+              />
           </Toolbar>
       </Toolbar>
-      <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
+      <Toolbar component="nav" variant="regular"
+        onClick={handleShowMenuItems}
+        id = {showMenuItems? 'nav-menu-items':"nav-menu-items2"}
+        className={classes().toolbarSecondary}>
         {sections.map((section) => (
           <Link
             color="inherit"
@@ -88,7 +79,8 @@ export default function Header() {
             key={section.title}
             variant="body2"
             to={section.url}
-            className={classes.toolbarLink}
+            className={classes().toolbarLink}
+            onClick={handleShowMenuItems}
           >
             {section.title}
           </Link>

@@ -13,7 +13,26 @@
         color: #1a1717;
     }
   }
+
+  #bars{
+    color: #050205;
+    cursor: pointer;
+    display: none;
+    font-size: 2rem;
+    &:hover{
+      color: #808080;
+      transition: all linear 2s ease-in-out;
+    }
+  }
+  #toolbars{
+    display: flex;
+    justify-content: space-around;
+  }
   
   
   
-  
+  #header{
+    background: #ffffff !important;
+    position: static !important;
+    top: 6px;
+  }

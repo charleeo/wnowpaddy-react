@@ -24,10 +24,11 @@ a{
     color: #808080;
   }
 }
-.my-page-link{
-  color: red;
-  background-color: purple;
-}
+
+
+
+
+
 
 
 
@@ -38,4 +39,5 @@ a{
 @import './pagination';
 @import './footer';
 @import "./my_modal";
+@import './posts';
 @import "./media";

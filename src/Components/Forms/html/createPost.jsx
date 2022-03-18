@@ -7,7 +7,7 @@ export const CreatePostHTML=(props)=>{
      {isLoading?<span className="loader"></span>:
         <div className='col-md-11 col-sm-12'>
           <div className="card shadow border-0">
-            <div className='card-heade '>
+            <div className='card-header'>
               <h4 className="text-center">{text} Post</h4>
             </div>
             <div className='card-body'>             

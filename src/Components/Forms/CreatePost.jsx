@@ -91,8 +91,6 @@ export default function CreatePost({getData,editPostData,closeAllOpenedModal}){
       })
     }
     else { 
-      
-      console.log(ex)
       Swal.fire({
         title: 'Error!',
         text: "There was an unexpected error. Please try again",

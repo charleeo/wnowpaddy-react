@@ -20,7 +20,7 @@ const menusItems   =()=>{
       }else{
         menusLists.push(
           { title: 'Login', url: '/login' }, 
-          { title: 'Register', url: 'register' }
+          { title: 'Register', url: '/register' }
           )
       }
       return menusLists

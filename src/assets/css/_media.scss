@@ -1,6 +1,44 @@
-@media screen and(max-width:480px) {
+@media screen and(max-width:620px) {
     .mui-divider{
         background: #273cb1;
         display: none;
+    }
+    .main-text{
+        font-size: 1.6rem !important;
+    }
+    #bars{
+        display: flex;
+    }
+    #nav-menu-items{
+        height: 100vh;
+        width: 100vw;
+        position: absolute;
+        z-index: 1;
+        top: 10px;
+        left: 0;
+        background: #000000e6;
+        overflow-x: hidden;
+        transition: 2s all;
+        display: flex;
+        justify-content: space-evenly;
+        flex-direction: column;
+        padding: 1rem auto;
+        a{
+            color: #ffffff;
+        }
+    }
+    #nav-menu-items2{
+        display:  none;
+    }
+    
+    .inner-card{
+        height: 15rem;
+        margin-top: 4px
+    }
+}
+@media screen and(max-width:420px) {
+
+    .inner-card{
+        min-height: 15rem;
     }
 }
