@@ -114,7 +114,7 @@ export const PostsData = ({getData,posts,showCreate,closeModal})=>{
       return(
         <div className="show-more-div card-footer border-0" id={`show_more_${post.id}`}
         >
-        {/* {auth.getCurrentUser() && post.user_id === userDetails.id  &&  */}
+        {auth.getCurrentUser() && post.user_id === userDetails.id  && 
          <>
             <button className="btn btn-primary btn-sm mx-2" onClick={ async()=>{
                 await getSinglePost(post.id)
@@ -127,7 +127,7 @@ export const PostsData = ({getData,posts,showCreate,closeModal})=>{
                 <Bookmark/>
             </button>
          </>
-        {/* } */}
+        }
         </div>
       )
   }

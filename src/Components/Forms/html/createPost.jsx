@@ -35,6 +35,7 @@ export const CreatePostHTML=(props)=>{
                 
                 <div className='form-group'>
                 <input type="file" name="file"  onChange={handleFileUpload} />
+                {editPostData?<img src={editPostData.data.response.file_small_size_url} width='100' height={'100'} />:""}
                 </div>
                 <div className='form-group'>
                   <label htmlFor='name'>Sub Category</label>
